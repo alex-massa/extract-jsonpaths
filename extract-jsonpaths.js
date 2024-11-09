@@ -1,69 +1,73 @@
 import fs from 'fs';
 import getStdin from 'get-stdin';
 import { promisify } from 'util';
+import { Command } from 'commander';
 import { getJSONPathsFromSchema, getJSONPathsFromObject } from './utils/json-paths-utils.js';
 import JSONPathsTree from './lib/json-paths-tree.js';
 import $RefParser from '@apidevtools/json-schema-ref-parser';
 
-// check for flags
-const args = process.argv.slice(2);
+let fromSchema = false;
 
-const inputFile = args.find(arg => !arg.startsWith('-'));
+const program = new Command();
 
-const schemaOption = args.includes('--from-schema') || args.includes('-s');
-
-const extractCommand = args.includes('--extract');
-const leavesOption = args.includes('--leaves') || args.includes('-l');
-const jsonOption = args.includes('--json') || args.includes('-j');
-
-const treeCommand = args.includes('--tree');
-
-// load schema and resolve references
-async function main() {
-    const input = await (async (inputFile) =>
-        inputFile ? promisify(fs.readFile)(inputFile, 'utf8') : getStdin()
-    )(inputFile);
+async function handleCommand(inputFile, options, handler) {
+    const input = inputFile
+        ? await promisify(fs.readFile)(inputFile, 'utf8')
+        : await getStdin();
     if (!input) {
         throw new Error("No input provided via file or stdin.");
     }
 
     let jsonPaths;
-    if (schemaOption) {
+    if (fromSchema) {
         const jsonSchema = JSON.parse(input);
         const resolvedJsonSchema = await $RefParser.dereference(jsonSchema, { mutateInputSchema: false });
-        // get JSONPaths starting from the properties section
         jsonPaths = resolvedJsonSchema.properties ? getJSONPathsFromSchema(resolvedJsonSchema.properties) : new Set();
-    }
-    else {
+    } else {
         const jsonObject = JSON.parse(input);
         jsonPaths = getJSONPathsFromObject(jsonObject);
     }
 
-    if (extractCommand) {
-        let paths;
-        if (leavesOption) {
-            const jsonPathsTree = new JSONPathsTree(jsonPaths);
-            paths = jsonPathsTree.getLeaves().map(node => node.path);
-        } else {
-            paths = [...jsonPaths];
-        }
-
-        if (jsonOption) {
-            console.log(JSON.stringify(paths));
-        } else {
-            [...paths].forEach(path => console.log(path));
-        };
-        return;
-    }
-    if (treeCommand) {
-        const jsonPathsTree = new JSONPathsTree(jsonPaths);
-        console.log(jsonPathsTree.toString());
-        return;
-    }
-    throw new Error("No command specified. Please provide either --extract or --tree.");
+    handler(jsonPaths, options);
 }
 
-main().catch(err => {
-    console.error(err);
-    process.exit(1);
-});
+function handleExtract(jsonPaths, options) {
+    let paths;
+
+    if (options.leaves) {
+        const jsonPathsTree = new JSONPathsTree(jsonPaths);
+        paths = jsonPathsTree.getLeaves().map(node => node.path);
+    } else {
+        paths = [...jsonPaths];
+    }
+
+    if (options.json) {
+        console.log(JSON.stringify(paths));
+    } else {
+        paths.forEach(path => console.log(path));
+    }
+}
+
+function handleTree(jsonPaths, options) {
+    const jsonPathsTree = new JSONPathsTree(jsonPaths);
+    console.log(jsonPathsTree.toString());
+}
+
+program
+    .description('CLI tool to extract JSONPath(s) from a JSON object.')
+    .option('-s, --from-schema', 'extract JSONPath(s) from the properties of a JSON Schema instead of a JSON object')
+    .on('option:from-schema', () => fromSchema = true);
+
+program
+    .command('extract [input]', { isDefault: true })
+    .description('output JSONPath(s)')
+    .option('-l, --leaves', 'output only leaf nodes') 
+    .option('-j, --json', 'output as JSON array')
+    .action((inputFile, options) => handleCommand(inputFile, options, handleExtract));
+
+program
+    .command('tree [input]')
+    .description('output a tree representation of JSONPath(s)')
+    .action((inputFile, options) => handleCommand(inputFile, options, handleTree));
+
+program.parse(process.argv);

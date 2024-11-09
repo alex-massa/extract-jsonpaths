@@ -2,6 +2,7 @@
   "type": "module",
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.7.2",
+    "commander": "^12.1.0",
     "get-stdin": "^9.0.0"
   }
 }
