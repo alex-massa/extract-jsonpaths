@@ -1,0 +1,5 @@
+{
+    "main": "extract-jsonpaths.js",
+    "output": "sea-prep.blob",
+    "disableExperimentalSEAWarning": true
+}

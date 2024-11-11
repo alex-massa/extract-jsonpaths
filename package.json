@@ -1,8 +1,20 @@
 {
-  "type": "module",
+  "name": "jsonpath-extractor",
+  "description": "A CLI tool to extract JSONPath(s) from a JSON object or JSON Schema.",
+  "keywords": [
+    "json",
+    "jsonpath",
+    "jsonschema",
+    "schema",
+    "cli",
+    "extract"
+  ],
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.7.2",
     "commander": "^12.1.0",
     "get-stdin": "^9.0.0"
+  },
+  "devDependencies": {
+    "postject": "^1.0.0-alpha.6"
   }
 }
