@@ -9,12 +9,17 @@
     "cli",
     "extract"
   ],
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.7.2",
     "commander": "^12.1.0",
     "get-stdin": "^9.0.0"
   },
   "devDependencies": {
+    "chai": "^5.1.2",
+    "mocha": "^10.8.2",
     "postject": "^1.0.0-alpha.6"
   }
 }

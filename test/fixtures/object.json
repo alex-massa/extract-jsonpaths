@@ -1,0 +1,165 @@
+{
+    "id": "12345",
+    "name": "Sample Data",
+    "metadata": {
+        "createdAt": "2024-11-11T00:00:00Z",
+        "tags": [
+            "test",
+            "sample",
+            "complex"
+        ],
+        "status": {
+            "active": true,
+            "verified": false,
+            "history": [
+                {
+                    "date": "2024-10-01T12:34:56Z",
+                    "status": "created"
+                },
+                {
+                    "date": "2024-10-10T15:20:30Z",
+                    "status": "updated"
+                },
+                {
+                    "date": "2024-11-05T09:00:00Z",
+                    "status": "reviewed"
+                }
+            ]
+        }
+    },
+    "details": {
+        "attributes": {
+            "weight": 5.5,
+            "height": 175,
+            "dimensions": {
+                "length": 100,
+                "width": 50,
+                "depth": 25
+            },
+            "colors": [
+                "red",
+                "blue",
+                "green"
+            ],
+            "material": {
+                "primary": "steel",
+                "secondary": "plastic"
+            }
+        },
+        "locations": [
+            {
+                "country": "USA",
+                "city": "New York",
+                "coordinates": {
+                    "latitude": 40.7128,
+                    "longitude": -74.0060
+                }
+            },
+            {
+                "country": "Germany",
+                "city": "Berlin",
+                "coordinates": {
+                    "latitude": 52.52,
+                    "longitude": 13.4050
+                }
+            }
+        ]
+    },
+    "users": [
+        {
+            "userId": "user001",
+            "preferences": {
+                "notifications": {
+                    "email": true,
+                    "sms": false
+                },
+                "theme": "dark",
+                "bookmarks": [
+                    {
+                        "title": "Home",
+                        "url": "https://home.com"
+                    },
+                    {
+                        "title": "Profile",
+                        "url": "https://profile.com"
+                    }
+                ]
+            }
+        },
+        {
+            "userId": "user002",
+            "preferences": {
+                "notifications": {
+                    "email": false,
+                    "sms": true
+                },
+                "theme": "light",
+                "bookmarks": [
+                    {
+                        "title": "Dashboard",
+                        "url": "https://dashboard.com"
+                    },
+                    {
+                        "title": "Reports",
+                        "url": "https://reports.com"
+                    }
+                ]
+            }
+        }
+    ],
+    "audit": {
+        "log": [
+            {
+                "entryId": "log001",
+                "action": "create",
+                "timestamp": "2024-11-01T08:00:00Z",
+                "details": {
+                    "actor": "system",
+                    "reason": "initialization",
+                    "changes": [
+                        {
+                            "field": "status",
+                            "oldValue": null,
+                            "newValue": "created"
+                        },
+                        {
+                            "field": "active",
+                            "oldValue": null,
+                            "newValue": true
+                        }
+                    ]
+                }
+            },
+            {
+                "entryId": "log002",
+                "action": "update",
+                "timestamp": "2024-11-05T10:30:00Z",
+                "details": {
+                    "actor": "admin",
+                    "reason": "data correction",
+                    "changes": [
+                        {
+                            "field": "verified",
+                            "oldValue": false,
+                            "newValue": true
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "settings": {
+        "privacy": {
+            "policyAccepted": true,
+            "lastUpdated": "2024-10-15T10:00:00Z"
+        },
+        "preferences": {
+            "language": "en",
+            "timezone": "UTC",
+            "appearance": {
+                "theme": "light",
+                "contrast": "high"
+            }
+        }
+    }
+}

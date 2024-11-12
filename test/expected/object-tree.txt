@@ -1,0 +1,61 @@
+├── id
+├── name
+├── metadata
+│   ├── createdAt
+│   ├── tags[*]
+│   └── status
+│       ├── active
+│       ├── verified
+│       └── history[*]
+│           ├── date
+│           └── status
+├── details
+│   ├── attributes
+│   │   ├── weight
+│   │   ├── height
+│   │   ├── dimensions
+│   │   │   ├── length
+│   │   │   ├── width
+│   │   │   └── depth
+│   │   ├── colors[*]
+│   │   └── material
+│   │       ├── primary
+│   │       └── secondary
+│   └── locations[*]
+│       ├── country
+│       ├── city
+│       └── coordinates
+│           ├── latitude
+│           └── longitude
+├── users[*]
+│   ├── userId
+│   └── preferences
+│       ├── notifications
+│       │   ├── email
+│       │   └── sms
+│       ├── theme
+│       └── bookmarks[*]
+│           ├── title
+│           └── url
+├── audit
+│   └── log[*]
+│       ├── entryId
+│       ├── action
+│       ├── timestamp
+│       └── details
+│           ├── actor
+│           ├── reason
+│           └── changes[*]
+│               ├── field
+│               ├── oldValue
+│               └── newValue
+└── settings
+    ├── privacy
+    │   ├── policyAccepted
+    │   └── lastUpdated
+    └── preferences
+        ├── language
+        ├── timezone
+        └── appearance
+            ├── theme
+            └── contrast

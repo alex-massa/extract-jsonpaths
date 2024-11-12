@@ -1,0 +1,423 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ComplexDataSchema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "metadata": {
+            "$ref": "#/definitions/metadata"
+        },
+        "details": {
+            "$ref": "#/definitions/details"
+        },
+        "users": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/user"
+            }
+        },
+        "audit": {
+            "$ref": "#/definitions/audit"
+        },
+        "settings": {
+            "$ref": "#/definitions/settings"
+        }
+    },
+    "required": [
+        "id",
+        "name",
+        "metadata",
+        "details",
+        "users",
+        "audit",
+        "settings"
+    ],
+    "definitions": {
+        "metadata": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "status": {
+                    "$ref": "#/definitions/status"
+                }
+            },
+            "required": [
+                "createdAt",
+                "tags",
+                "status"
+            ]
+        },
+        "status": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "verified": {
+                    "type": "boolean"
+                },
+                "history": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "date": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "status": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "date",
+                            "status"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "active",
+                "verified",
+                "history"
+            ]
+        },
+        "details": {
+            "type": "object",
+            "properties": {
+                "attributes": {
+                    "$ref": "#/definitions/attributes"
+                },
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/location"
+                    }
+                }
+            },
+            "required": [
+                "attributes",
+                "locations"
+            ]
+        },
+        "attributes": {
+            "type": "object",
+            "properties": {
+                "weight": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                },
+                "dimensions": {
+                    "$ref": "#/definitions/dimensions"
+                },
+                "colors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "material": {
+                    "$ref": "#/definitions/material"
+                }
+            },
+            "required": [
+                "weight",
+                "height",
+                "dimensions",
+                "colors",
+                "material"
+            ]
+        },
+        "dimensions": {
+            "type": "object",
+            "properties": {
+                "length": {
+                    "type": "number"
+                },
+                "width": {
+                    "type": "number"
+                },
+                "depth": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "length",
+                "width",
+                "depth"
+            ]
+        },
+        "material": {
+            "type": "object",
+            "properties": {
+                "primary": {
+                    "type": "string"
+                },
+                "secondary": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "primary",
+                "secondary"
+            ]
+        },
+        "location": {
+            "type": "object",
+            "properties": {
+                "country": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "coordinates": {
+                    "$ref": "#/definitions/coordinates"
+                }
+            },
+            "required": [
+                "country",
+                "city",
+                "coordinates"
+            ]
+        },
+        "coordinates": {
+            "type": "object",
+            "properties": {
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "latitude",
+                "longitude"
+            ]
+        },
+        "user": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "string"
+                },
+                "preferences": {
+                    "$ref": "#/definitions/preferences"
+                }
+            },
+            "required": [
+                "userId",
+                "preferences"
+            ]
+        },
+        "preferences": {
+            "type": "object",
+            "properties": {
+                "notifications": {
+                    "$ref": "#/definitions/notifications"
+                },
+                "theme": {
+                    "type": "string"
+                },
+                "bookmarks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/bookmark"
+                    }
+                }
+            },
+            "required": [
+                "notifications",
+                "theme",
+                "bookmarks"
+            ]
+        },
+        "notifications": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "boolean"
+                },
+                "sms": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "email",
+                "sms"
+            ]
+        },
+        "bookmark": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [
+                "title",
+                "url"
+            ]
+        },
+        "audit": {
+            "type": "object",
+            "properties": {
+                "log": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/logEntry"
+                    }
+                }
+            },
+            "required": [
+                "log"
+            ]
+        },
+        "logEntry": {
+            "type": "object",
+            "properties": {
+                "entryId": {
+                    "type": "string"
+                },
+                "action": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "details": {
+                    "$ref": "#/definitions/logDetails"
+                }
+            },
+            "required": [
+                "entryId",
+                "action",
+                "timestamp",
+                "details"
+            ]
+        },
+        "logDetails": {
+            "type": "object",
+            "properties": {
+                "actor": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "changes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/change"
+                    }
+                }
+            },
+            "required": [
+                "actor",
+                "reason",
+                "changes"
+            ]
+        },
+        "change": {
+            "type": "object",
+            "properties": {
+                "field": {
+                    "type": "string"
+                },
+                "oldValue": {},
+                "newValue": {}
+            },
+            "required": [
+                "field",
+                "newValue"
+            ]
+        },
+        "settings": {
+            "type": "object",
+            "properties": {
+                "privacy": {
+                    "$ref": "#/definitions/privacy"
+                },
+                "preferences": {
+                    "$ref": "#/definitions/settingPreferences"
+                }
+            },
+            "required": [
+                "privacy",
+                "preferences"
+            ]
+        },
+        "privacy": {
+            "type": "object",
+            "properties": {
+                "policyAccepted": {
+                    "type": "boolean"
+                },
+                "lastUpdated": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "required": [
+                "policyAccepted",
+                "lastUpdated"
+            ]
+        },
+        "settingPreferences": {
+            "type": "object",
+            "properties": {
+                "language": {
+                    "type": "string"
+                },
+                "timezone": {
+                    "type": "string"
+                },
+                "appearance": {
+                    "$ref": "#/definitions/appearance"
+                }
+            },
+            "required": [
+                "language",
+                "timezone",
+                "appearance"
+            ]
+        },
+        "appearance": {
+            "type": "object",
+            "properties": {
+                "theme": {
+                    "type": "string"
+                },
+                "contrast": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "theme",
+                "contrast"
+            ]
+        }
+    }
+}

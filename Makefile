@@ -1,12 +1,19 @@
 .PHONY: install compile clean
 
-PLATFORM ?= linux
 PROGRAM_NAME := extract-jsonpaths
+PLATFORM ?= linux
+RUN_TESTS ?= true
 
 install:
 	npm install .
 
+test:
+	npm run test
+
 compile: clean install
+ifeq ($(RUN_TESTS), true)
+	$(MAKE) test
+endif
 	node --experimental-sea-config sea-config.json
 	cp $(shell command -v node) $(PROGRAM_NAME)
 	chmod 755 $(PROGRAM_NAME)
