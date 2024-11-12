@@ -1,4 +1,4 @@
-.PHONY: install compile clean
+.PHONY: install test compile clean
 
 PROGRAM_NAME := extract-jsonpaths
 PLATFORM ?= linux
