@@ -36,20 +36,20 @@ describe('JSONPath Extraction', () => {
         runTest('extract', 'schema.json', 'schema-leaves.txt', ['--from-schema', '--leaves']);
     });
 
-    it.skip('extracts JSONPaths from a JSON object and outputs as JSON list', () => {
-        // @PENDING
+    it('extracts JSONPaths from a JSON object and outputs as JSON list', () => {
+        runTest('extract', 'object.json', 'object-paths.json', ['--json']);
     });
 
-    it.skip('extracts JSONPaths from the properties section of a JSON schema and outputs as JSON list', () => {
-        // @PENDING
+    it('extracts JSONPaths from the properties section of a JSON schema and outputs as JSON list', () => {
+        runTest('extract', 'schema.json', 'schema-paths.json', ['--from-schema', '--json']);
     });
 
-    it.skip('extracts only the leaves JSONPaths from a JSON object and outputs as JSON list', () => {
-        // @PENDING
+    it('extracts only the leaves JSONPaths from a JSON object and outputs as JSON list', () => {
+        runTest('extract', 'object.json', 'object-leaves.json', ['--leaves', '--json']);
     });
 
-    it.skip('extracts only the leaves JSONPaths from the properties section of a JSON schema and outputs as JSON list', () => {
-        // @PENDING
+    it('extracts only the leaves JSONPaths from the properties section of a JSON schema and outputs as JSON list', () => {
+        runTest('extract', 'schema.json', 'schema-leaves.json', ['--from-schema', '--leaves', '--json']);
     });
 });
 
