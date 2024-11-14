@@ -4,13 +4,8 @@ PROGRAM_NAME := extract-jsonpaths
 PLATFORM ?= linux
 RUN_TESTS ?= true
 
-install:
+compile: clean
 	npm install .
-
-test:
-	npm run test
-
-compile: clean install
 ifeq ($(RUN_TESTS), true)
 	$(MAKE) test
 endif

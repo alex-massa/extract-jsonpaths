@@ -1,5 +1,6 @@
 {
   "name": "jsonpath-extractor",
+  "version": "1.0.0",
   "description": "A CLI tool to extract JSONPath(s) from a JSON object or JSON Schema.",
   "keywords": [
     "json",
@@ -9,7 +10,15 @@
     "cli",
     "extract"
   ],
+  "bin": {
+    "extract-jsonpaths": "./extract-jsonpaths.js"
+  },
+  "exports": {
+    "./utils": "./utils/json-paths-utils.js",
+    "./lib": "./lib/json-paths-tree.js"
+  },
   "scripts": {
+    "start": "node extract-jsonpaths.js",
     "test": "mocha"
   },
   "dependencies": {

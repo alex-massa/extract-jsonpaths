@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { createRequire } = require('node:module');
 require = createRequire(__filename);
 
