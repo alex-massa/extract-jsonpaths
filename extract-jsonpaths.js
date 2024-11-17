@@ -8,7 +8,6 @@ const { promisify } = require('util');
 const { Command } = require('commander');
 const { getJSONPathsFromSchema, getJSONPathsFromObject } = require('./utils/json-paths-utils.js');
 const JSONPathsTree = require('./lib/json-paths-tree.js').default;
-const $RefParser = require('@apidevtools/json-schema-ref-parser');
 
 const program = new Command();
 
@@ -23,16 +22,10 @@ async function handleCommand(inputFile, options, handler) {
         process.exit(1);
     }
 
-    let jsonPaths;
-    if (options.fromSchema) {
-        const jsonSchema = JSON.parse(input);
-        const resolvedJsonSchema = await $RefParser.dereference(jsonSchema, { mutateInputSchema: false });
-        jsonPaths = resolvedJsonSchema.properties ? getJSONPathsFromSchema(resolvedJsonSchema.properties) : new Set();
-    } else {
-        const jsonObject = JSON.parse(input);
-        jsonPaths = getJSONPathsFromObject(jsonObject);
-    }
-
+    const json = JSON.parse(input);
+    const jsonPaths = options.fromSchema
+        ? await getJSONPathsFromSchema(json)
+        : getJSONPathsFromObject(json);
     handler(jsonPaths, options);
 }
 
@@ -45,12 +38,7 @@ function handleExtract(jsonPaths, options) {
     } else {
         paths = [...jsonPaths];
     }
-
-    if (options.json) {
-        console.log(JSON.stringify(paths));
-    } else {
-        paths.forEach(path => console.log(path));
-    }
+    console.log(options.json ? JSON.stringify(paths) : paths.join('\n'));
 }
 
 function handleTree(jsonPaths, options) {
