@@ -31,7 +31,6 @@ async function handleCommand(inputFile, options, handler) {
 
 function handleExtract(jsonPaths, options) {
     let paths;
-
     if (options.leaves) {
         const jsonPathsTree = new JSONPathsTree(jsonPaths);
         paths = jsonPathsTree.getLeaves().map(node => node.path);

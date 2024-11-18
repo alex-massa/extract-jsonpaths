@@ -10,6 +10,14 @@
     "cli",
     "extract"
   ],
+  "license": "MIT",
+  "author": {
+    "name": "Alex Massa"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "http://paypal.me/alexmassa97"
+  },
   "bin": {
     "extract-jsonpaths": "./extract-jsonpaths.js"
   },

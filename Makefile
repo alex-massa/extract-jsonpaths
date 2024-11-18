@@ -12,7 +12,7 @@ endif
 	node --experimental-sea-config sea-config.json
 	cp $(shell command -v node) $(PROGRAM_NAME)
 	chmod 755 $(PROGRAM_NAME)
-ifeq ($(PLATFORM), mac)
+ifeq ($(PLATFORM), darwin)
 	codesign --remove-signature $(PROGRAM_NAME)
 	npx postject $(PROGRAM_NAME) NODE_SEA_BLOB sea-prep.blob \
 		--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
