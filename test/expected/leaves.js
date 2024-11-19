@@ -1,11 +1,10 @@
-export const paths = set([
+export const paths = new Set([
     '$.id',
     '$.name',
     '$.metadata.createdAt',
     '$.metadata.tags[*]',
     '$.metadata.status.active',
     '$.metadata.status.verified',
-    '$.metadata.status.history[*]',
     '$.metadata.status.history[*].date',
     '$.metadata.status.history[*].status',
     '$.details.attributes.weight',

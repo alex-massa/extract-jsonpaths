@@ -62,5 +62,5 @@ export async function getJSONPathsFromSchema(schema) {
     const { $RefParser } = await import('@apidevtools/json-schema-ref-parser');
     const resolvedSchema = await $RefParser.dereference(schema, { mutateInputSchema: false });
     const schemaProperties = resolvedSchema.properties;
-    return schemaProperties ? extractPaths(schemaProperties) : new Set();
+    return extractPaths(schemaProperties);
 }

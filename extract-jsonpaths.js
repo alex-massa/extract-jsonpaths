@@ -26,6 +26,9 @@ async function handleCommand(inputFile, options, handler) {
     const jsonPaths = options.fromSchema
         ? await getJSONPathsFromSchema(json)
         : getJSONPathsFromObject(json);
+    if (jsonPaths.size === 0) {
+        return;
+    }
     handler(jsonPaths, options);
 }
 
