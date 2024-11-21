@@ -27,6 +27,14 @@
     "./utils": "./utils/json-paths-utils.js",
     "./lib": "./lib/json-paths-tree.js"
   },
+  "files": [
+    "./extract-jsonpaths.js",
+    "./utils/json-paths-utils.js",
+    "./lib/json-paths-tree.js",
+    "./package.json",
+    "./README.md",
+    "./LICENSE.txt"
+  ],
   "scripts": {
     "start": "node extract-jsonpaths.js",
     "test": "mocha"
