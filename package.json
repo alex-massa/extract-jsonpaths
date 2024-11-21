@@ -1,7 +1,7 @@
 {
-  "name": "jsonpath-extractor",
+  "name": "extract-jsonpaths",
+  "description": "CLI tool to extract JSONPath(s) from a JSON object or JSONSchema.",
   "version": "1.0.0",
-  "description": "A CLI tool to extract JSONPath(s) from a JSON object or JSON Schema.",
   "keywords": [
     "json",
     "jsonpath",
@@ -10,6 +10,10 @@
     "cli",
     "extract"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex-massa/extract-jsonpaths.git"
+  },
   "license": "MIT",
   "author": {
     "name": "Alex Massa"
@@ -18,9 +22,7 @@
     "type": "individual",
     "url": "http://paypal.me/alexmassa97"
   },
-  "bin": {
-    "extract-jsonpaths": "./extract-jsonpaths.js"
-  },
+  "bin": "./extract-jsonpaths.js",
   "exports": {
     "./utils": "./utils/json-paths-utils.js",
     "./lib": "./lib/json-paths-tree.js"
@@ -38,5 +40,8 @@
     "chai": "^5.1.2",
     "mocha": "^10.8.2",
     "postject": "^1.0.0-alpha.6"
+  },
+  "engines": {
+    "node": ">=22.7.0"
   }
 }

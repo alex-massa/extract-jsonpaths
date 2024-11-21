@@ -106,8 +106,8 @@ node extract-jsonpaths.js tree <input-file>
 #### Code Example
 
 ```js
-const { getJSONPathsFromObject } = require('jsonpath-extractor/utils');
-const JSONPathsTree = require('jsonpath-extractor/lib').default;
+const { getJSONPathsFromObject } = require('extract-jsonpaths/utils');
+const JSONPathsTree = require('extract-jsonpaths/lib').default;
 
 // Step 1: Extract JSONPaths from the object
 const jsonObject = {
@@ -165,8 +165,8 @@ console.log(jsonPathsTree.toString());
 #### Code Example
 
 ```js
-const { getJSONPathsFromSchema } = require('jsonpath-extractor/utils');
-const JSONPathsTree = require('jsonpath-extractor/lib').default;
+const { getJSONPathsFromSchema } = require('extract-jsonpaths/utils');
+const JSONPathsTree = require('extract-jsonpaths/lib').default;
 
 (async () => {
     // Step 1: Extract JSONPaths from the JSONSchema
