@@ -50,8 +50,8 @@ function handleTree(jsonPaths, options) {
 
 program
     .name('extract-jsonpaths')
-    .description('CLI tool to extract JSONPath(s) from a JSON object or JSONSchema.')
-    .version('1.0.0');
+    .description('CLI tool to extract JSONPath(s) from a JSON object or JSON Schema.')
+    .version('1.0.1');
 
 program
     .command('extract [input]', { isDefault: true })

@@ -32,8 +32,8 @@ export function getJSONPathsFromObject(obj) {
 }
 
 /**
- * Recursive function to get all JSONPaths from a JSONSchema within $.properties
- * @param {object} schema - The JSONSchema object
+ * Recursive function to get all JSONPaths from a JSON Schema within $.properties
+ * @param {object} schema - The JSON Schema object
  * @returns {Set<string>} The set of JSONPaths
  */
 export async function getJSONPathsFromSchema(schema) {

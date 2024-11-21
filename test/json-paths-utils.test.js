@@ -7,7 +7,7 @@ import { getJSONPathsFromObject, getJSONPathsFromSchema } from '../utils/json-pa
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-describe('JSON Paths Utilities', () => {
+describe('JSONPaths Utilities', () => {
     describe('getJSONPathsFromObject', () => {
         it('extracts JSONPaths from a JSON object', async () => {
             const inputPath = path.resolve(__dirname, 'fixtures/object.json');
