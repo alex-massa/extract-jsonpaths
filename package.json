@@ -22,7 +22,9 @@
     "type": "individual",
     "url": "http://paypal.me/alexmassa97"
   },
-  "bin": "./extract-jsonpaths.js",
+  "bin": {
+    "extract-jsonpaths": "extract-jsonpaths.js"
+  },
   "exports": {
     "./utils": "./utils/json-paths-utils.js",
     "./lib": "./lib/json-paths-tree.js"
