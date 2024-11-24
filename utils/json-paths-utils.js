@@ -1,9 +1,21 @@
 /**
+ * Returns a subset of JSONPaths comprised exclusively of the leaf elements
+ * @param {Set<string>} jsonPaths - The set of JSONPaths
+ * @returns {Promise<Set<string>>} A promise that resolves to a set of leaf JSONPaths
+ */
+async function getLeavesFromPaths(jsonPaths) {
+    const JSONPathsTree = (await import('../lib/json-paths-tree.js')).default;
+    const jsonPathsTree = new JSONPathsTree(jsonPaths);
+    return new Set(jsonPathsTree.getLeaves().map(node => node.path));
+}
+
+/**
  * Recursive function to get all JSONPaths from a JSON object
  * @param {object} obj - The JSON object
- * @returns {Set<string>} The set of JSONPaths
+ * @param {boolean} [leaves=false] - If true, returns only leaf JSONPaths; otherwise, all paths are returne
+ * @returns {Promise<Set<string>>} A promise that resolves to a set of JSONPaths
  */
-export function getJSONPathsFromObject(obj) {
+export async function getJSONPathsFromObject(obj, leaves = false) {
     function extractPaths(obj, path = '$', paths = new Set()) {
         if (obj && typeof obj === 'object' && obj !== null) {
             for (const key in obj) {
@@ -28,15 +40,17 @@ export function getJSONPathsFromObject(obj) {
         return paths;
     }
 
-    return extractPaths(obj);
+    const jsonPaths = extractPaths(obj);
+    return leaves ? await getLeavesFromPaths(jsonPaths) : jsonPaths;
 }
 
 /**
  * Recursive function to get all JSONPaths from a JSON Schema within $.properties
  * @param {object} schema - The JSON Schema object
- * @returns {Set<string>} The set of JSONPaths
+ * @param {boolean} [leaves=false] - If true, returns only leaf JSONPaths; otherwise, all paths are returned
+ * @returns {Promise<Set<string>>} A promise that resolves to a set of JSONPaths
  */
-export async function getJSONPathsFromSchema(schema) {
+export async function getJSONPathsFromSchema(schema, leaves = false) {
     function extractPaths(obj, path = '$', paths = new Set()) {
         if (obj && typeof obj === 'object' && obj !== null) {
             for (const key in obj) {
@@ -62,5 +76,6 @@ export async function getJSONPathsFromSchema(schema) {
     const { $RefParser } = await import('@apidevtools/json-schema-ref-parser');
     const resolvedSchema = await $RefParser.dereference(schema, { mutateInputSchema: false });
     const schemaProperties = resolvedSchema.properties;
-    return extractPaths(schemaProperties);
+    const jsonPaths = extractPaths(schemaProperties);
+    return leaves ? await getLeavesFromPaths(jsonPaths) : jsonPaths;
 }

@@ -3,7 +3,7 @@ import path from 'path';
 import { expect } from 'chai';
 import { fileURLToPath } from 'url';
 import { getJSONPathsFromObject, getJSONPathsFromSchema } from '../utils/json-paths-utils.js';
-import JSONPathsTree from "../lib/json-paths-tree.js";
+import JSONPathsTree from '../lib/json-paths-tree.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,7 +15,7 @@ describe('JSONPathsTree', () => {
             const expectedOutputPath = path.resolve(__dirname, 'expected/leaves.js');
 
             const input = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
-            const jsonPaths = getJSONPathsFromObject(input);
+            const jsonPaths = await getJSONPathsFromObject(input);
             const jsonPathsTree = new JSONPathsTree(jsonPaths);
             const output = new Set(
                 jsonPathsTree.getLeaves().map(node => node.path)
@@ -47,7 +47,7 @@ describe('JSONPathsTree', () => {
             const expectedOutputPath = path.resolve(__dirname, 'expected/tree.txt');
 
             const input = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
-            const jsonPaths = getJSONPathsFromObject(input);
+            const jsonPaths = await getJSONPathsFromObject(input);
             const jsonPathsTree = new JSONPathsTree(jsonPaths);
             const output = jsonPathsTree.toString().trim();
 

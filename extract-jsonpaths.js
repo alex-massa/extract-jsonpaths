@@ -24,8 +24,8 @@ async function handleCommand(inputFile, options, handler) {
 
     const json = JSON.parse(input);
     const jsonPaths = options.fromSchema
-        ? await getJSONPathsFromSchema(json)
-        : getJSONPathsFromObject(json);
+        ? await getJSONPathsFromSchema(json, options.leaves)
+        : await getJSONPathsFromObject(json, options.leaves);
     if (jsonPaths.size === 0) {
         return;
     }
@@ -33,13 +33,7 @@ async function handleCommand(inputFile, options, handler) {
 }
 
 function handleExtract(jsonPaths, options) {
-    let paths;
-    if (options.leaves) {
-        const jsonPathsTree = new JSONPathsTree(jsonPaths);
-        paths = jsonPathsTree.getLeaves().map(node => node.path);
-    } else {
-        paths = [...jsonPaths];
-    }
+    const paths = [...jsonPaths];
     console.log(options.json ? JSON.stringify(paths) : paths.join('\n'));
 }
 
