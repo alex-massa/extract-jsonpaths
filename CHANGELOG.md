@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.0.2] - 2024-11-27
+### Fixed
+- Align the version number displayed by the CLI utility with the actual package release version.
+
 ## [2.0.1] - 2024-11-27
 ### Fixed
 - Should now properly handle properties defined in the `oneOf`, `anyOf`, `allOf`, `if`, `then`, `else`  sections of a JSON Schema. \
@@ -20,7 +24,8 @@
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/alex-massa/extract-jsonpaths/compare/2.0.1...HEAD
+[Unreleased]: https://github.com/alex-massa/extract-jsonpaths/compare/2.0.2...HEAD
+[2.0.2]: https://github.com/alex-massa/extract-jsonpaths/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/alex-massa/extract-jsonpaths/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/alex-massa/extract-jsonpaths/compare/1.0.1...2.0.0
 [1.0.1]: https://github.com/alex-massa/extract-jsonpaths/compare/1.0.0...1.0.1

@@ -6,6 +6,7 @@ require = createRequire(__filename);
 const fs = require('fs');
 const { promisify } = require('util');
 const { Command } = require('commander');
+const { version } = require('./package.json');
 const { getJSONPathsFromSchema, getJSONPathsFromObject } = require('./utils/json-paths-utils.js');
 const JSONPathsTree = require('./lib/json-paths-tree.js').default;
 
@@ -45,7 +46,7 @@ function handleTree(jsonPaths, options) {
 program
     .name('extract-jsonpaths')
     .description('CLI tool to extract JSONPath(s) from a JSON object or JSON Schema.')
-    .version('1.0.1');
+    .version(version);
 
 program
     .command('extract [input]', { isDefault: true })
