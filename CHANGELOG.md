@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.0.1] - 2024-11-27
+### Fixed
+- Should now properly handle properties defined in the `oneOf`, `anyOf`, `allOf`, `if`, `then`, `else`  sections of a JSON Schema. \
+  This also applies to the `getJSONPathsFromSchema` function.
+
 ## [2.0.0] - 2024-11-24
 ### Changed
 - Add boolean parameter `leaves` to `getJSONPathsFromObject` and `getJSONPathsFromSchema` functions.
@@ -15,7 +20,8 @@
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/alex-massa/extract-jsonpaths/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/alex-massa/extract-jsonpaths/compare/2.0.1...HEAD
+[2.0.1]: https://github.com/alex-massa/extract-jsonpaths/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/alex-massa/extract-jsonpaths/compare/1.0.1...2.0.0
 [1.0.1]: https://github.com/alex-massa/extract-jsonpaths/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/alex-massa/extract-jsonpaths/commits/1.0.0

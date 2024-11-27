@@ -4,6 +4,9 @@
  * @returns {Promise<Set<string>>} A promise that resolves to a set of leaf JSONPaths
  */
 async function getLeavesFromPaths(jsonPaths) {
+    if (!Boolean(jsonPaths?.size)) {
+        return jsonPaths;
+    }
     const JSONPathsTree = (await import('../lib/json-paths-tree.js')).default;
     const jsonPathsTree = new JSONPathsTree(jsonPaths);
     return new Set(jsonPathsTree.getLeaves().map(node => node.path));
@@ -20,17 +23,18 @@ export async function getJSONPathsFromObject(obj, leaves = false) {
         if (obj && typeof obj === 'object' && obj !== null) {
             for (const key in obj) {
                 const currentPath = `${path}.${key}`;
-                if (Array.isArray(obj[key])) {
+                const currentItem = obj[key];
+                if (Array.isArray(currentItem)) {
                     // for arrays, add the path with [*] notation
                     const arrayPath = `${currentPath}[*]`;
                     paths.add(arrayPath);
-                    obj[key].forEach(item => {
+                    currentItem.forEach(item => {
                         extractPaths(item, arrayPath, paths);
                     });
-                } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                } else if (typeof currentItem === 'object' && currentItem !== null) {
                     // for nested objects, add the path and recurse
                     paths.add(currentPath);
-                    extractPaths(obj[key], currentPath, paths);
+                    extractPaths(currentItem, currentPath, paths);
                 } else {
                     // for primitive values, just add the path
                     paths.add(currentPath);
@@ -51,22 +55,48 @@ export async function getJSONPathsFromObject(obj, leaves = false) {
  * @returns {Promise<Set<string>>} A promise that resolves to a set of JSONPaths
  */
 export async function getJSONPathsFromSchema(schema, leaves = false) {
-    function extractPaths(obj, path = '$', paths = new Set()) {
-        if (obj && typeof obj === 'object' && obj !== null) {
+    const processSchemaPart = (schemaPart, path = '$', paths = new Set()) => {
+        for (const key in schemaPart) {
+            let currentItem = schemaPart[key];
+            if (key === 'properties' && currentItem) {
+                extractPaths(currentItem, path, paths);
+            } else if (['oneOf', 'anyOf', 'allOf', 'if', 'then', 'else'].includes(key)) {
+                // wrap in array if single item
+                if (!Array.isArray(currentItem)) {
+                    currentItem = [currentItem, ];
+                }
+                currentItem.forEach((schemaSubpart) => {
+                    if (schemaSubpart.properties) {
+                        extractPaths(schemaSubpart.properties, path, paths);
+                    }
+                });
+            }
+        }
+        return paths;
+    };
+    const extractPaths = (obj, path = '$', paths = new Set()) => {
+        if (obj && typeof obj === 'object') {
             for (const key in obj) {
                 const currentPath = `${path}.${key}`;
-                // check if the current key is an array
-                if (obj[key]?.type === 'array' && obj[key].items) {
+                const currentItem = obj[key];
+                // check if current item is an array with 'items' or an object with 'properties'
+                if (currentItem?.type === 'array' && currentItem.items) {
+                    // handle array paths
                     const arrayPath = `${currentPath}[*]`;
-                    // add the array path only if it doesn't exist
                     paths.add(arrayPath);
-                    // recursively get properties of the items
-                    extractPaths(obj[key].items.properties, arrayPath, paths);
+                    if (currentItem.items?.properties) {
+                        extractPaths(currentItem.items.properties, arrayPath, paths);
+                    }
                 } else {
-                    // add the current path if it's not already included
+                    // add current path in set if not already included
                     paths.add(currentPath);
-                    // check for properties or items of non-array objects
-                    extractPaths(obj[key].properties || obj[key].items?.properties, currentPath, paths);
+                    // handle 'properties' or 'items.properties' recursively
+                    if (currentItem?.properties) {
+                        extractPaths(currentItem.properties, currentPath, paths);
+                    } else if (currentItem?.items?.properties) {
+                        extractPaths(currentItem.items.properties, currentPath, paths);
+                    }
+                    processSchemaPart(currentItem, currentPath, paths);
                 }
             }
         }
@@ -75,7 +105,6 @@ export async function getJSONPathsFromSchema(schema, leaves = false) {
 
     const { $RefParser } = await import('@apidevtools/json-schema-ref-parser');
     const resolvedSchema = await $RefParser.dereference(schema, { mutateInputSchema: false });
-    const schemaProperties = resolvedSchema.properties;
-    const jsonPaths = extractPaths(schemaProperties);
+    const jsonPaths = processSchemaPart(resolvedSchema);
     return leaves ? await getLeavesFromPaths(jsonPaths) : jsonPaths;
 }
